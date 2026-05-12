@@ -89,6 +89,56 @@
             margin: 6px 0; transition: var(--transition); border-radius: 2px;
         }
 
+        /* ===== LANGUAGE SWITCHER ===== */
+        .lang-switcher {
+            position: relative;
+        }
+        .lang-btn {
+            display: flex; align-items: center; gap: 6px;
+            background: var(--bg); border: 2px solid #e0e0e0;
+            padding: 8px 14px; border-radius: 8px;
+            font-size: 0.85rem; font-weight: 600;
+            color: var(--text); cursor: pointer;
+            transition: var(--transition); font-family: inherit;
+        }
+        .lang-btn:hover { border-color: var(--primary); background: var(--white); }
+        .lang-btn .lang-flag { font-size: 1.1rem; }
+        .lang-btn .lang-arrow {
+            font-size: 0.6rem; transition: var(--transition);
+            margin-left: 2px;
+        }
+        .lang-switcher.open .lang-btn .lang-arrow { transform: rotate(180deg); }
+        .lang-dropdown {
+            position: absolute; top: calc(100% + 6px); right: 0;
+            background: var(--white); border-radius: 12px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            min-width: 160px; z-index: 2000;
+            opacity: 0; visibility: hidden; transform: translateY(-8px);
+            transition: all 0.25s ease; overflow: hidden;
+        }
+        .lang-switcher.open .lang-dropdown {
+            opacity: 1; visibility: visible; transform: translateY(0);
+        }
+        .lang-option {
+            display: flex; align-items: center; gap: 10px;
+            padding: 12px 16px; cursor: pointer;
+            font-size: 0.9rem; color: var(--text);
+            transition: var(--transition); border: none;
+            background: none; width: 100%; text-align: left;
+            font-family: inherit;
+        }
+        .lang-option:hover { background: var(--bg); color: var(--primary); }
+        .lang-option.active { background: rgba(14,102,85,0.08); color: var(--primary); font-weight: 600; }
+        .lang-option .lang-flag { font-size: 1.15rem; }
+
+        @media (max-width: 768px) {
+            .lang-switcher {
+                position: absolute;
+                right: 60px; top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+
         /* ===== HERO ===== */
         .hero {
             position: relative; min-height: 100vh;
@@ -120,7 +170,7 @@
             font-size: 3.5rem; line-height: 1.15; color: var(--white);
             margin-bottom: 20px; font-weight: 700;
         }
-        .hero h1 span { color: var(--accent-light); }
+        .hero h1 .hero-highlight { color: var(--accent-light); display: block; font-size: 3.5rem; }
         .hero p {
             font-size: 1.2rem; color: rgba(255,255,255,0.85);
             margin-bottom: 36px; line-height: 1.7; max-width: 560px;
@@ -411,12 +461,36 @@
             Guilin Gateway
         </a>
         <ul class="nav-links">
-            <li><a href="#tours">Tour Packages</a></li>
-            <li><a href="#why-us">Why Us</a></li>
-            <li><a href="#reviews">Reviews</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="#contact" class="nav-cta">Book Now</a></li>
+            <li><a href="#tours" data-i18n="nav.tours">Tour Packages</a></li>
+            <li><a href="#why-us" data-i18n="nav.whyUs">Why Us</a></li>
+            <li><a href="#reviews" data-i18n="nav.reviews">Reviews</a></li>
+            <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+            <li><a href="#contact" class="nav-cta" data-i18n="nav.bookNow">Book Now</a></li>
         </ul>
+        <div class="lang-switcher" id="langSwitcher">
+            <button class="lang-btn" id="langBtn" aria-label="Switch language">
+                <span class="lang-flag" id="langFlag">🇺🇸</span>
+                <span class="lang-label" id="langLabel">EN</span>
+                <span class="lang-arrow">▼</span>
+            </button>
+            <div class="lang-dropdown" id="langDropdown">
+                <button class="lang-option active" data-lang="en">
+                    <span class="lang-flag">🇺🇸</span> English
+                </button>
+                <button class="lang-option" data-lang="zh">
+                    <span class="lang-flag">🇨🇳</span> 中文
+                </button>
+                <button class="lang-option" data-lang="ko">
+                    <span class="lang-flag">🇰🇷</span> 한국어
+                </button>
+                <button class="lang-option" data-lang="ja">
+                    <span class="lang-flag">🇯🇵</span> 日本語
+                </button>
+                <button class="lang-option" data-lang="es">
+                    <span class="lang-flag">🇪🇸</span> Español
+                </button>
+            </div>
+        </div>
         <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
             <span></span><span></span><span></span>
         </button>
@@ -431,25 +505,25 @@
     </div>
     <div class="container">
         <div class="hero-content">
-            <div class="hero-badge">✦ #1 Rated Guilin Tour Agency on TripAdvisor</div>
-            <h1>Experience the <span>Magic of Guilin</span></h1>
-            <p>Embark on an unforgettable journey through China's most breathtaking karst landscapes. From the iconic Li River to the charming streets of Yangshuo — we craft the perfect adventure for you.</p>
+            <div class="hero-badge" data-i18n="hero.badge">✦ #1 Rated Guilin Tour Agency on TripAdvisor</div>
+            <h1><span data-i18n="hero.title1">Experience the </span><span data-i18n="hero.title2">Magic of Guilin</span></h1>
+            <p data-i18n="hero.desc">Embark on an unforgettable journey through China's most breathtaking karst landscapes. From the iconic Li River to the charming streets of Yangshuo — we craft the perfect adventure for you.</p>
             <div class="hero-buttons">
-                <a href="#tours" class="btn btn-primary">Explore Tours →</a>
-                <a href="#contact" class="btn btn-outline">Get Free Quote</a>
+                <a href="#tours" class="btn btn-primary" data-i18n="hero.explore">Explore Tours →</a>
+                <a href="#contact" class="btn btn-outline" data-i18n="hero.quote">Get Free Quote</a>
             </div>
             <div class="hero-stats">
                 <div class="hero-stat">
                     <h3>10,000+</h3>
-                    <p>Happy Travelers</p>
+                    <p data-i18n="hero.stat1">Happy Travelers</p>
                 </div>
                 <div class="hero-stat">
                     <h3>50+</h3>
-                    <p>Tour Packages</p>
+                    <p data-i18n="hero.stat2">Tour Packages</p>
                 </div>
                 <div class="hero-stat">
                     <h3>4.9★</h3>
-                    <p>Average Rating</p>
+                    <p data-i18n="hero.stat3">Average Rating</p>
                 </div>
             </div>
         </div>
@@ -460,31 +534,31 @@
 <section class="section" id="tours">
     <div class="container">
         <div class="section-header">
-            <span class="section-label">Our Packages</span>
-            <h2>Handpicked Tour Experiences</h2>
-            <p>From classic river cruises to off-the-beaten-path adventures — find the perfect Guilin experience for your travel style and budget.</p>
+            <span class="section-label" data-i18n="tours.label">Our Packages</span>
+            <h2 data-i18n="tours.title">Handpicked Tour Experiences</h2>
+            <p data-i18n="tours.desc">From classic river cruises to off-the-beaten-path adventures — find the perfect Guilin experience for your travel style and budget.</p>
         </div>
         <div class="tours-grid">
             <!-- Tour 1 -->
             <div class="tour-card">
                 <div class="tour-img">
                     <img src="assets/li_river_cruise_1280x720.jpg" alt="Li River Cruise">
-                    <span class="tour-badge">Best Seller</span>
-                    <span class="tour-duration">Full Day</span>
+                    <span class="tour-badge" data-i18n="tours.t1.badge">Best Seller</span>
+                    <span class="tour-duration" data-i18n="tours.t1.duration">Full Day</span>
                 </div>
                 <div class="tour-info">
-                    <h3>Classic Li River Cruise</h3>
-                    <p>Glide through the stunning karst landscape from Guilin to Yangshuo aboard a comfortable cruise ship. See the scenery featured on the 20 RMB banknote.</p>
+                    <h3 data-i18n="tours.t1.title">Classic Li River Cruise</h3>
+                    <p data-i18n="tours.t1.desc">Glide through the stunning karst landscape from Guilin to Yangshuo aboard a comfortable cruise ship. See the scenery featured on the 20 RMB banknote.</p>
                     <div class="tour-highlights">
-                        <span class="tour-tag">🚢 River Cruise</span>
-                        <span class="tour-tag">🏔 Karst Views</span>
-                        <span class="tour-tag">📷 Photo Stops</span>
+                        <span class="tour-tag" data-i18n="tours.t1.tag1">🚢 River Cruise</span>
+                        <span class="tour-tag" data-i18n="tours.t1.tag2">🏔 Karst Views</span>
+                        <span class="tour-tag" data-i18n="tours.t1.tag3">📷 Photo Stops</span>
                     </div>
                     <div class="tour-footer">
                         <div class="tour-price">
-                            <span>From</span> <strong>$89</strong> <small>/person</small>
+                            <span data-i18n="tours.from">From</span> <strong>$89</strong> <small data-i18n="tours.person">/person</small>
                         </div>
-                        <button class="btn-book" onclick="scrollToContact('Classic Li River Cruise')">Book Now</button>
+                        <button class="btn-book" onclick="scrollToContact('Classic Li River Cruise')" data-i18n="tours.book">Book Now</button>
                     </div>
                 </div>
             </div>
@@ -492,22 +566,22 @@
             <div class="tour-card">
                 <div class="tour-img">
                     <img src="assets/yangshuo_1280x720.jpg" alt="Yangshuo Countryside">
-                    <span class="tour-badge">Popular</span>
-                    <span class="tour-duration">2 Days</span>
+                    <span class="tour-badge" data-i18n="tours.t2.badge">Popular</span>
+                    <span class="tour-duration" data-i18n="tours.t2.duration">2 Days</span>
                 </div>
                 <div class="tour-info">
-                    <h3>Yangshuo Discovery Tour</h3>
-                    <p>Explore Yangshuo's stunning countryside by bike and bamboo raft. Visit ancient villages, rice terraces, and enjoy the famous Impression Sanjie Liu light show.</p>
+                    <h3 data-i18n="tours.t2.title">Yangshuo Discovery Tour</h3>
+                    <p data-i18n="tours.t2.desc">Explore Yangshuo's stunning countryside by bike and bamboo raft. Visit ancient villages, rice terraces, and enjoy the famous Impression Sanjie Liu light show.</p>
                     <div class="tour-highlights">
-                        <span class="tour-tag">🚲 Cycling</span>
-                        <span class="tour-tag">🎋 Bamboo Raft</span>
-                        <span class="tour-tag">🎭 Light Show</span>
+                        <span class="tour-tag" data-i18n="tours.t2.tag1">🚲 Cycling</span>
+                        <span class="tour-tag" data-i18n="tours.t2.tag2">🎋 Bamboo Raft</span>
+                        <span class="tour-tag" data-i18n="tours.t2.tag3">🎭 Light Show</span>
                     </div>
                     <div class="tour-footer">
                         <div class="tour-price">
-                            <span>From</span> <strong>$159</strong> <small>/person</small>
+                            <span data-i18n="tours.from">From</span> <strong>$159</strong> <small data-i18n="tours.person">/person</small>
                         </div>
-                        <button class="btn-book" onclick="scrollToContact('Yangshuo Discovery Tour')">Book Now</button>
+                        <button class="btn-book" onclick="scrollToContact('Yangshuo Discovery Tour')" data-i18n="tours.book">Book Now</button>
                     </div>
                 </div>
             </div>
@@ -515,22 +589,22 @@
             <div class="tour-card">
                 <div class="tour-img">
                     <img src="assets/guilin_food_1280x720.jpg" alt="Guilin Food Tour">
-                    <span class="tour-badge">New</span>
-                    <span class="tour-duration">Half Day</span>
+                    <span class="tour-badge" data-i18n="tours.t3.badge">New</span>
+                    <span class="tour-duration" data-i18n="tours.t3.duration">Half Day</span>
                 </div>
                 <div class="tour-info">
-                    <h3>Guilin Food & Culture Walk</h3>
-                    <p>Taste your way through Guilin's vibrant food scene. From the legendary Guilin Rice Noodles to Beer Fish and local street snacks — a feast for all senses.</p>
+                    <h3 data-i18n="tours.t3.title">Guilin Food & Culture Walk</h3>
+                    <p data-i18n="tours.t3.desc">Taste your way through Guilin's vibrant food scene. From the legendary Guilin Rice Noodles to Beer Fish and local street snacks — a feast for all senses.</p>
                     <div class="tour-highlights">
-                        <span class="tour-tag">🍜 Rice Noodles</span>
-                        <span class="tour-tag">🐟 Beer Fish</span>
-                        <span class="tour-tag">🏪 Local Markets</span>
+                        <span class="tour-tag" data-i18n="tours.t3.tag1">🍜 Rice Noodles</span>
+                        <span class="tour-tag" data-i18n="tours.t3.tag2">🐟 Beer Fish</span>
+                        <span class="tour-tag" data-i18n="tours.t3.tag3">🏪 Local Markets</span>
                     </div>
                     <div class="tour-footer">
                         <div class="tour-price">
-                            <span>From</span> <strong>$49</strong> <small>/person</small>
+                            <span data-i18n="tours.from">From</span> <strong>$49</strong> <small data-i18n="tours.person">/person</small>
                         </div>
-                        <button class="btn-book" onclick="scrollToContact('Guilin Food & Culture Walk')">Book Now</button>
+                        <button class="btn-book" onclick="scrollToContact('Guilin Food & Culture Walk')" data-i18n="tours.book">Book Now</button>
                     </div>
                 </div>
             </div>
@@ -542,30 +616,30 @@
 <section class="section section-alt" id="why-us">
     <div class="container">
         <div class="section-header">
-            <span class="section-label">Why Choose Us</span>
-            <h2>Your Trusted Guilin Travel Partner</h2>
-            <p>We go above and beyond to make your Guilin trip seamless, authentic, and unforgettable.</p>
+            <span class="section-label" data-i18n="why.label">Why Choose Us</span>
+            <h2 data-i18n="why.title">Your Trusted Guilin Travel Partner</h2>
+            <p data-i18n="why.desc">We go above and beyond to make your Guilin trip seamless, authentic, and unforgettable.</p>
         </div>
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">🎯</div>
-                <h3>Expert Local Guides</h3>
-                <p>English-speaking certified guides who know every hidden gem and secret viewpoint.</p>
+                <h3 data-i18n="why.f1.title">Expert Local Guides</h3>
+                <p data-i18n="why.f1.desc">English-speaking certified guides who know every hidden gem and secret viewpoint.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">💎</div>
-                <h3>Best Price Guarantee</h3>
-                <p>Competitive pricing with no hidden fees. We match any comparable tour price.</p>
+                <h3 data-i18n="why.f2.title">Best Price Guarantee</h3>
+                <p data-i18n="why.f2.desc">Competitive pricing with no hidden fees. We match any comparable tour price.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🔄</div>
-                <h3>Free Cancellation</h3>
-                <p>Plans change — we get it. Cancel up to 48 hours before for a full refund.</p>
+                <h3 data-i18n="why.f3.title">Free Cancellation</h3>
+                <p data-i18n="why.f3.desc">Plans change — we get it. Cancel up to 48 hours before for a full refund.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">📱</div>
-                <h3>24/7 Support</h3>
-                <p>Round-the-clock assistance via WhatsApp, email, or phone throughout your trip.</p>
+                <h3 data-i18n="why.f4.title">24/7 Support</h3>
+                <p data-i18n="why.f4.desc">Round-the-clock assistance via WhatsApp, email, or phone throughout your trip.</p>
             </div>
         </div>
     </div>
@@ -575,41 +649,41 @@
 <section class="section" id="reviews">
     <div class="container">
         <div class="section-header">
-            <span class="section-label">Testimonials</span>
-            <h2>What Our Travelers Say</h2>
-            <p>Real stories from real travelers who explored Guilin with us.</p>
+            <span class="section-label" data-i18n="reviews.label">Testimonials</span>
+            <h2 data-i18n="reviews.title">What Our Travelers Say</h2>
+            <p data-i18n="reviews.desc">Real stories from real travelers who explored Guilin with us.</p>
         </div>
         <div class="testimonials-grid">
             <div class="testimonial-card">
                 <div class="testimonial-stars">★★★★★</div>
-                <blockquote>"The Li River cruise was absolutely breathtaking. Our guide was knowledgeable and fun. This was the highlight of our entire China trip!"</blockquote>
+                <blockquote data-i18n="reviews.r1.text">"The Li River cruise was absolutely breathtaking. Our guide was knowledgeable and fun. This was the highlight of our entire China trip!"</blockquote>
                 <div class="testimonial-author">
                     <div class="testimonial-avatar">S</div>
                     <div>
-                        <div class="testimonial-name">Sarah Mitchell</div>
-                        <div class="testimonial-from">London, United Kingdom</div>
+                        <div class="testimonial-name" data-i18n="reviews.r1.name">Sarah Mitchell</div>
+                        <div class="testimonial-from" data-i18n="reviews.r1.from">London, United Kingdom</div>
                     </div>
                 </div>
             </div>
             <div class="testimonial-card">
                 <div class="testimonial-stars">★★★★★</div>
-                <blockquote>"Guilin Gateway made everything effortless. From airport pickup to the Yangshuo cycling tour — every detail was perfectly arranged."</blockquote>
+                <blockquote data-i18n="reviews.r2.text">"Guilin Gateway made everything effortless. From airport pickup to the Yangshuo cycling tour — every detail was perfectly arranged."</blockquote>
                 <div class="testimonial-author">
                     <div class="testimonial-avatar">M</div>
                     <div>
-                        <div class="testimonial-name">Michael Chen</div>
-                        <div class="testimonial-from">San Francisco, USA</div>
+                        <div class="testimonial-name" data-i18n="reviews.r2.name">Michael Chen</div>
+                        <div class="testimonial-from" data-i18n="reviews.r2.from">San Francisco, USA</div>
                     </div>
                 </div>
             </div>
             <div class="testimonial-card">
                 <div class="testimonial-stars">★★★★★</div>
-                <blockquote>"The food tour was incredible! We tried dishes we'd never find on our own. The local market visit was a truly authentic experience."</blockquote>
+                <blockquote data-i18n="reviews.r3.text">"The food tour was incredible! We tried dishes we'd never find on our own. The local market visit was a truly authentic experience."</blockquote>
                 <div class="testimonial-author">
                     <div class="testimonial-avatar">E</div>
                     <div>
-                        <div class="testimonial-name">Emma Schmidt</div>
-                        <div class="testimonial-from">Munich, Germany</div>
+                        <div class="testimonial-name" data-i18n="reviews.r3.name">Emma Schmidt</div>
+                        <div class="testimonial-from" data-i18n="reviews.r3.from">Munich, Germany</div>
                     </div>
                 </div>
             </div>
@@ -620,11 +694,11 @@
 <!-- ===== CTA ===== -->
 <section class="cta-section">
     <div class="container">
-        <h2>Ready to Explore Guilin?</h2>
-        <p>Get a free personalized itinerary tailored to your interests, budget, and travel dates. No obligations — just pure travel inspiration.</p>
+        <h2 data-i18n="cta.title">Ready to Explore Guilin?</h2>
+        <p data-i18n="cta.desc">Get a free personalized itinerary tailored to your interests, budget, and travel dates. No obligations — just pure travel inspiration.</p>
         <div class="cta-buttons">
-            <a href="#contact" class="btn-cta-primary">Get Your Free Quote →</a>
-            <a href="https://wa.me/8613800000000" class="btn-cta-outline" target="_blank">Chat on WhatsApp</a>
+            <a href="#contact" class="btn-cta-primary" data-i18n="cta.quote">Get Your Free Quote →</a>
+            <a href="https://wa.me/8613800000000" class="btn-cta-outline" target="_blank" data-i18n="cta.whatsapp">Chat on WhatsApp</a>
         </div>
     </div>
 </section>
@@ -633,18 +707,18 @@
 <section class="section section-alt" id="contact">
     <div class="container">
         <div class="section-header">
-            <span class="section-label">Get In Touch</span>
-            <h2>Book Your Guilin Adventure</h2>
-            <p>Fill out the form below and our travel experts will get back to you within 24 hours with a personalized proposal.</p>
+            <span class="section-label" data-i18n="contact.label">Get In Touch</span>
+            <h2 data-i18n="contact.title">Book Your Guilin Adventure</h2>
+            <p data-i18n="contact.desc">Fill out the form below and our travel experts will get back to you within 24 hours with a personalized proposal.</p>
         </div>
         <div class="contact-wrapper">
             <div class="contact-info">
-                <h3>Let's Plan Your Trip</h3>
-                <p>Whether you're traveling solo, as a couple, with family, or in a group — we'll design the perfect Guilin experience for you.</p>
+                <h3 data-i18n="contact.info.title">Let's Plan Your Trip</h3>
+                <p data-i18n="contact.info.desc">Whether you're traveling solo, as a couple, with family, or in a group — we'll design the perfect Guilin experience for you.</p>
                 <div class="contact-item">
                     <div class="contact-icon">📧</div>
                     <div>
-                        <h4>Email Us</h4>
+                        <h4 data-i18n="contact.email">Email Us</h4>
                         <p>info@guilingateway.com</p>
                     </div>
                 </div>
@@ -658,61 +732,61 @@
                 <div class="contact-item">
                     <div class="contact-icon">🕐</div>
                     <div>
-                        <h4>Working Hours</h4>
-                        <p>Mon–Sat: 9:00 AM – 9:00 PM (GMT+8)</p>
+                        <h4 data-i18n="contact.hours">Working Hours</h4>
+                        <p data-i18n="contact.hours.detail">Mon–Sat: 9:00 AM – 9:00 PM (GMT+8)</p>
                     </div>
                 </div>
                 <div class="contact-item">
                     <div class="contact-icon">📍</div>
                     <div>
-                        <h4>Office</h4>
-                        <p>Zhongshan Road, Guilin, Guangxi, China</p>
+                        <h4 data-i18n="contact.office">Office</h4>
+                        <p data-i18n="contact.address">Zhongshan Road, Guilin, Guangxi, China</p>
                     </div>
                 </div>
             </div>
             <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="name">Full Name *</label>
+                        <label for="name" data-i18n="contact.form.name">Full Name *</label>
                         <input type="text" id="name" name="name" placeholder="John Smith" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email *</label>
+                        <label for="email" data-i18n="contact.form.email">Email *</label>
                         <input type="email" id="email" name="email" placeholder="john@example.com" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="travelDate">Travel Date</label>
+                        <label for="travelDate" data-i18n="contact.form.date">Travel Date</label>
                         <input type="date" id="travelDate" name="travelDate">
                     </div>
                     <div class="form-group">
-                        <label for="travelers">Number of Travelers</label>
+                        <label for="travelers" data-i18n="contact.form.travelers">Number of Travelers</label>
                         <select id="travelers" name="travelers">
-                            <option value="">Select...</option>
-                            <option value="1">1 Person (Solo)</option>
-                            <option value="2">2 People (Couple)</option>
-                            <option value="3-5">3–5 People (Family)</option>
-                            <option value="6-10">6–10 People (Small Group)</option>
-                            <option value="10+">10+ People (Large Group)</option>
+                            <option value="" data-i18n="contact.form.select">Select...</option>
+                            <option value="1" data-i18n="contact.form.travelers.1">1 Person (Solo)</option>
+                            <option value="2" data-i18n="contact.form.travelers.2">2 People (Couple)</option>
+                            <option value="3-5" data-i18n="contact.form.travelers.3">3–5 People (Family)</option>
+                            <option value="6-10" data-i18n="contact.form.travelers.4">6–10 People (Small Group)</option>
+                            <option value="10+" data-i18n="contact.form.travelers.5">10+ People (Large Group)</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="tour">Interested Tour</label>
+                    <label for="tour" data-i18n="contact.form.tour">Interested Tour</label>
                     <select id="tour" name="tour">
-                        <option value="">Select a tour...</option>
-                        <option value="Classic Li River Cruise">Classic Li River Cruise — from $89</option>
-                        <option value="Yangshuo Discovery Tour">Yangshuo Discovery Tour — from $159</option>
-                        <option value="Guilin Food & Culture Walk">Guilin Food & Culture Walk — from $49</option>
-                        <option value="Custom / Not Sure">Custom / Not Sure Yet</option>
+                        <option value="" data-i18n="contact.form.tour.select">Select a tour...</option>
+                        <option value="Classic Li River Cruise" data-i18n="contact.form.tour.1">Classic Li River Cruise — from $89</option>
+                        <option value="Yangshuo Discovery Tour" data-i18n="contact.form.tour.2">Yangshuo Discovery Tour — from $159</option>
+                        <option value="Guilin Food & Culture Walk" data-i18n="contact.form.tour.3">Guilin Food & Culture Walk — from $49</option>
+                        <option value="Custom / Not Sure" data-i18n="contact.form.tour.4">Custom / Not Sure Yet</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Tell us about your dream Guilin trip — any special requests, questions, or preferences..."></textarea>
+                    <label for="message" data-i18n="contact.form.message">Message</label>
+                    <textarea id="message" name="message" data-i18n-placeholder="contact.form.message.placeholder" placeholder="Tell us about your dream Guilin trip — any special requests, questions, or preferences..."></textarea>
                 </div>
-                <button type="submit" class="btn-submit">Send Inquiry →</button>
+                <button type="submit" class="btn-submit" data-i18n="contact.form.submit">Send Inquiry →</button>
             </form>
         </div>
     </div>
@@ -727,46 +801,518 @@
                     <div class="logo-icon">⛰</div>
                     Guilin Gateway
                 </a>
-                <p>Your trusted partner for unforgettable Guilin travel experiences. Licensed travel agency based in Guilin, China, serving international travelers since 2015.</p>
+                <p data-i18n="footer.brand.desc">Your trusted partner for unforgettable Guilin travel experiences. Licensed travel agency based in Guilin, China, serving international travelers since 2015.</p>
             </div>
             <div>
-                <h4>Tour Packages</h4>
+                <h4 data-i18n="footer.packages.title">Tour Packages</h4>
                 <ul>
-                    <li><a href="#tours">Li River Cruise</a></li>
-                    <li><a href="#tours">Yangshuo Tours</a></li>
-                    <li><a href="#tours">Food & Culture</a></li>
-                    <li><a href="#tours">Longji Terraces</a></li>
-                    <li><a href="#tours">Custom Tours</a></li>
+                    <li><a href="#tours" data-i18n="footer.packages.1">Li River Cruise</a></li>
+                    <li><a href="#tours" data-i18n="footer.packages.2">Yangshuo Tours</a></li>
+                    <li><a href="#tours" data-i18n="footer.packages.3">Food & Culture</a></li>
+                    <li><a href="#tours" data-i18n="footer.packages.4">Longji Terraces</a></li>
+                    <li><a href="#tours" data-i18n="footer.packages.5">Custom Tours</a></li>
                 </ul>
             </div>
             <div>
-                <h4>Company</h4>
+                <h4 data-i18n="footer.company.title">Company</h4>
                 <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Our Guides</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#" data-i18n="footer.company.1">About Us</a></li>
+                    <li><a href="#" data-i18n="footer.company.2">Our Guides</a></li>
+                    <li><a href="#" data-i18n="footer.company.3">Blog</a></li>
+                    <li><a href="#" data-i18n="footer.company.4">Careers</a></li>
+                    <li><a href="#" data-i18n="footer.company.5">Contact</a></li>
                 </ul>
             </div>
             <div>
-                <h4>Support</h4>
+                <h4 data-i18n="footer.support.title">Support</h4>
                 <ul>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Travel Tips</a></li>
-                    <li><a href="#">Visa Info</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#" data-i18n="footer.support.1">FAQ</a></li>
+                    <li><a href="#" data-i18n="footer.support.2">Travel Tips</a></li>
+                    <li><a href="#" data-i18n="footer.support.3">Visa Info</a></li>
+                    <li><a href="#" data-i18n="footer.support.4">Terms of Service</a></li>
+                    <li><a href="#" data-i18n="footer.support.5">Privacy Policy</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Guilin Gateway Tours. All rights reserved. | Licensed Travel Agency: Guilin, Guangxi, China</p>
+            <p data-i18n="footer.copyright">&copy; 2026 Guilin Gateway Tours. All rights reserved. | Licensed Travel Agency: Guilin, Guangxi, China</p>
         </div>
     </div>
 </footer>
 
 <script>
+    // ==================== I18N SYSTEM ====================
+    const i18nData = {
+        // ===== ENGLISH =====
+        en: {
+            "nav.tours": "Tour Packages", "nav.whyUs": "Why Us", "nav.reviews": "Reviews",
+            "nav.contact": "Contact", "nav.bookNow": "Book Now",
+            "hero.badge": "✦ #1 Rated Guilin Tour Agency on TripAdvisor",
+            "hero.title1": "Experience the ", "hero.title2": "Magic of Guilin",
+            "hero.desc": "Embark on an unforgettable journey through China's most breathtaking karst landscapes. From the iconic Li River to the charming streets of Yangshuo — we craft the perfect adventure for you.",
+            "hero.explore": "Explore Tours →", "hero.quote": "Get Free Quote",
+            "hero.stat1": "Happy Travelers", "hero.stat2": "Tour Packages", "hero.stat3": "Average Rating",
+            "tours.label": "Our Packages", "tours.title": "Handpicked Tour Experiences",
+            "tours.desc": "From classic river cruises to off-the-beaten-path adventures — find the perfect Guilin experience for your travel style and budget.",
+            "tours.t1.badge": "Best Seller", "tours.t1.duration": "Full Day",
+            "tours.t1.title": "Classic Li River Cruise",
+            "tours.t1.desc": "Glide through the stunning karst landscape from Guilin to Yangshuo aboard a comfortable cruise ship. See the scenery featured on the 20 RMB banknote.",
+            "tours.t1.tag1": "🚢 River Cruise", "tours.t1.tag2": "🏔 Karst Views", "tours.t1.tag3": "📷 Photo Stops",
+            "tours.t2.badge": "Popular", "tours.t2.duration": "2 Days",
+            "tours.t2.title": "Yangshuo Discovery Tour",
+            "tours.t2.desc": "Explore Yangshuo's stunning countryside by bike and bamboo raft. Visit ancient villages, rice terraces, and enjoy the famous Impression Sanjie Liu light show.",
+            "tours.t2.tag1": "🚲 Cycling", "tours.t2.tag2": "🎋 Bamboo Raft", "tours.t2.tag3": "🎭 Light Show",
+            "tours.t3.badge": "New", "tours.t3.duration": "Half Day",
+            "tours.t3.title": "Guilin Food & Culture Walk",
+            "tours.t3.desc": "Taste your way through Guilin's vibrant food scene. From the legendary Guilin Rice Noodles to Beer Fish and local street snacks — a feast for all senses.",
+            "tours.t3.tag1": "🍜 Rice Noodles", "tours.t3.tag2": "🐟 Beer Fish", "tours.t3.tag3": "🏪 Local Markets",
+            "tours.from": "From", "tours.person": "/person", "tours.book": "Book Now",
+            "why.label": "Why Choose Us", "why.title": "Your Trusted Guilin Travel Partner",
+            "why.desc": "We go above and beyond to make your Guilin trip seamless, authentic, and unforgettable.",
+            "why.f1.title": "Expert Local Guides", "why.f1.desc": "English-speaking certified guides who know every hidden gem and secret viewpoint.",
+            "why.f2.title": "Best Price Guarantee", "why.f2.desc": "Competitive pricing with no hidden fees. We match any comparable tour price.",
+            "why.f3.title": "Free Cancellation", "why.f3.desc": "Plans change — we get it. Cancel up to 48 hours before for a full refund.",
+            "why.f4.title": "24/7 Support", "why.f4.desc": "Round-the-clock assistance via WhatsApp, email, or phone throughout your trip.",
+            "reviews.label": "Testimonials", "reviews.title": "What Our Travelers Say",
+            "reviews.desc": "Real stories from real travelers who explored Guilin with us.",
+            "reviews.r1.text": "\u201cThe Li River cruise was absolutely breathtaking. Our guide was knowledgeable and fun. This was the highlight of our entire China trip!\u201d",
+            "reviews.r1.name": "Sarah Mitchell", "reviews.r1.from": "London, United Kingdom",
+            "reviews.r2.text": "\u201cGuilin Gateway made everything effortless. From airport pickup to the Yangshuo cycling tour — every detail was perfectly arranged.\u201d",
+            "reviews.r2.name": "Michael Chen", "reviews.r2.from": "San Francisco, USA",
+            "reviews.r3.text": "\u201cThe food tour was incredible! We tried dishes we\u2019d never find on our own. The local market visit was a truly authentic experience.\u201d",
+            "reviews.r3.name": "Emma Schmidt", "reviews.r3.from": "Munich, Germany",
+            "cta.title": "Ready to Explore Guilin?",
+            "cta.desc": "Get a free personalized itinerary tailored to your interests, budget, and travel dates. No obligations — just pure travel inspiration.",
+            "cta.quote": "Get Your Free Quote →", "cta.whatsapp": "Chat on WhatsApp",
+            "contact.label": "Get In Touch", "contact.title": "Book Your Guilin Adventure",
+            "contact.desc": "Fill out the form below and our travel experts will get back to you within 24 hours with a personalized proposal.",
+            "contact.info.title": "Let\u2019s Plan Your Trip",
+            "contact.info.desc": "Whether you\u2019re traveling solo, as a couple, with family, or in a group — we\u2019ll design the perfect Guilin experience for you.",
+            "contact.email": "Email Us", "contact.hours": "Working Hours",
+            "contact.hours.detail": "Mon–Sat: 9:00 AM – 9:00 PM (GMT+8)",
+            "contact.office": "Office", "contact.address": "Zhongshan Road, Guilin, Guangxi, China",
+            "contact.form.name": "Full Name *", "contact.form.email": "Email *",
+            "contact.form.date": "Travel Date", "contact.form.travelers": "Number of Travelers",
+            "contact.form.select": "Select...",
+            "contact.form.travelers.1": "1 Person (Solo)", "contact.form.travelers.2": "2 People (Couple)",
+            "contact.form.travelers.3": "3–5 People (Family)", "contact.form.travelers.4": "6–10 People (Small Group)",
+            "contact.form.travelers.5": "10+ People (Large Group)",
+            "contact.form.tour": "Interested Tour", "contact.form.tour.select": "Select a tour...",
+            "contact.form.tour.1": "Classic Li River Cruise — from $89",
+            "contact.form.tour.2": "Yangshuo Discovery Tour — from $159",
+            "contact.form.tour.3": "Guilin Food & Culture Walk — from $49",
+            "contact.form.tour.4": "Custom / Not Sure Yet",
+            "contact.form.message": "Message",
+            "contact.form.message.placeholder": "Tell us about your dream Guilin trip — any special requests, questions, or preferences...",
+            "contact.form.submit": "Send Inquiry →",
+            "footer.brand.desc": "Your trusted partner for unforgettable Guilin travel experiences. Licensed travel agency based in Guilin, China, serving international travelers since 2015.",
+            "footer.packages.title": "Tour Packages", "footer.packages.1": "Li River Cruise",
+            "footer.packages.2": "Yangshuo Tours", "footer.packages.3": "Food & Culture",
+            "footer.packages.4": "Longji Terraces", "footer.packages.5": "Custom Tours",
+            "footer.company.title": "Company", "footer.company.1": "About Us",
+            "footer.company.2": "Our Guides", "footer.company.3": "Blog",
+            "footer.company.4": "Careers", "footer.company.5": "Contact",
+            "footer.support.title": "Support", "footer.support.1": "FAQ",
+            "footer.support.2": "Travel Tips", "footer.support.3": "Visa Info",
+            "footer.support.4": "Terms of Service", "footer.support.5": "Privacy Policy",
+            "footer.copyright": "\u00a9 2026 Guilin Gateway Tours. All rights reserved. | Licensed Travel Agency: Guilin, Guangxi, China",
+            "alert.success": "Thank you for your inquiry! Our travel experts will contact you within 24 hours."
+        },
+        // ===== CHINESE =====
+        zh: {
+            "nav.tours": "旅游套餐", "nav.whyUs": "为什么选我们", "nav.reviews": "用户评价",
+            "nav.contact": "联系我们", "nav.bookNow": "立即预订",
+            "hero.badge": "✦ TripAdvisor 桂林排名第一旅行社",
+            "hero.title1": "体验 ", "hero.title2": "桂林的魔力",
+            "hero.desc": "踏上一段难忘的旅程，探索中国最令人叹为观止的喀斯特地貌。从标志性的漓江到阳朔迷人的街道——我们为您打造完美的冒险之旅。",
+            "hero.explore": "探索行程 →", "hero.quote": "免费获取报价",
+            "hero.stat1": "满意旅客", "hero.stat2": "旅游套餐", "hero.stat3": "平均评分",
+            "tours.label": "精选套餐", "tours.title": "精心策划的旅行体验",
+            "tours.desc": "从经典漓江游船到小众探险之旅——找到适合您旅行风格和预算的完美桂林体验。",
+            "tours.t1.badge": "最畅销", "tours.t1.duration": "全天",
+            "tours.t1.title": "经典漓江游船",
+            "tours.t1.desc": "乘坐舒适的游船，从桂林到阳朔，穿越令人惊叹的喀斯特地貌。观赏20元人民币纸币上的经典风景。",
+            "tours.t1.tag1": "🚢 漓江游船", "tours.t1.tag2": "🏔 喀斯特风光", "tours.t1.tag3": "📷 观景拍照",
+            "tours.t2.badge": "热门", "tours.t2.duration": "2天",
+            "tours.t2.title": "阳朔探索之旅",
+            "tours.t2.desc": "骑自行车和竹筏游览阳朔迷人的乡村风光。探访古老村庄、梯田，欣赏著名的《印象·刘三姐》大型山水实景演出。",
+            "tours.t2.tag1": "🚲 骑行", "tours.t2.tag2": "🎋 竹筏漂流", "tours.t2.tag3": "🎭 实景演出",
+            "tours.t3.badge": "新品", "tours.t3.duration": "半天",
+            "tours.t3.title": "桂林美食文化之旅",
+            "tours.t3.desc": "品味桂林丰富多彩的美食文化。从传奇的桂林米粉到啤酒鱼和当地街头小吃——一场全方位的味觉盛宴。",
+            "tours.t3.tag1": "🍜 桂林米粉", "tours.t3.tag2": "🐟 啤酒鱼", "tours.t3.tag3": "🏪 本地集市",
+            "tours.from": "起", "tours.person": "/人", "tours.book": "立即预订",
+            "why.label": "为什么选我们", "why.title": "您值得信赖的桂林旅行伙伴",
+            "why.desc": "我们竭尽全力让您的桂林之旅顺畅、真实且难以忘怀。",
+            "why.f1.title": "专业本地导游", "why.f1.desc": "精通英语的持证导游，了解每一个隐秘景点和秘密观景台。",
+            "why.f2.title": "最优价格保证", "why.f2.desc": "价格优惠且无隐藏费用。我们可匹配任何同类行程价格。",
+            "why.f3.title": "免费取消", "why.f3.desc": "计划有变？我们理解。出发前48小时取消可全额退款。",
+            "why.f4.title": "全天候支持", "why.f4.desc": "旅行全程通过WhatsApp、邮件或电话为您提供24/7不间断服务。",
+            "reviews.label": "旅客评价", "reviews.title": "听听旅客们怎么说",
+            "reviews.desc": "来自真实旅客的真实故事，他们与我们一起探索了桂林。",
+            "reviews.r1.text": "\u201c漓江游船绝对令人叹为观止。我们的导游知识渊博又风趣。这是我们整个中国之行的最大亮点！\u201d",
+            "reviews.r1.name": "Sarah Mitchell", "reviews.r1.from": "英国伦敦",
+            "reviews.r2.text": "\u201c桂林通让一切都变得轻松无比。从机场接送到阳朔骑行之旅——每一个细节都安排得恰到好处。\u201d",
+            "reviews.r2.name": "Michael Chen", "reviews.r2.from": "美国旧金山",
+            "reviews.r3.text": "\u201c美食之旅太棒了！我们尝到了自己绝对找不到的美食。逛本地集市是一次真正地道的体验。\u201d",
+            "reviews.r3.name": "Emma Schmidt", "reviews.r3.from": "德国慕尼黑",
+            "cta.title": "准备好探索桂林了吗？",
+            "cta.desc": "获取免费的个性化行程方案，根据您的兴趣、预算和旅行日期量身定制。无任何义务——纯粹的旅行灵感。",
+            "cta.quote": "免费获取报价 →", "cta.whatsapp": "WhatsApp 咨询",
+            "contact.label": "联系我们", "contact.title": "预订您的桂林之旅",
+            "contact.desc": "填写下方表单，我们的旅行专家将在24小时内回复您并提供个性化方案。",
+            "contact.info.title": "让我们规划您的旅程",
+            "contact.info.desc": "无论您是独自旅行、情侣出行、家庭旅行还是团队出游——我们都将为您设计完美的桂林体验。",
+            "contact.email": "电子邮件", "contact.hours": "工作时间",
+            "contact.hours.detail": "周一至周六：上午9:00 – 晚上9:00（北京时间）",
+            "contact.office": "办公地址", "contact.address": "中国广西桂林市中山路",
+            "contact.form.name": "姓名 *", "contact.form.email": "邮箱 *",
+            "contact.form.date": "出行日期", "contact.form.travelers": "出行人数",
+            "contact.form.select": "请选择...",
+            "contact.form.travelers.1": "1人（独行）", "contact.form.travelers.2": "2人（情侣）",
+            "contact.form.travelers.3": "3–5人（家庭）", "contact.form.travelers.4": "6–10人（小团）",
+            "contact.form.travelers.5": "10人以上（大团）",
+            "contact.form.tour": "感兴趣的行程", "contact.form.tour.select": "请选择行程...",
+            "contact.form.tour.1": "经典漓江游船 — $89起",
+            "contact.form.tour.2": "阳朔探索之旅 — $159起",
+            "contact.form.tour.3": "桂林美食文化之旅 — $49起",
+            "contact.form.tour.4": "暂不确定",
+            "contact.form.message": "留言",
+            "contact.form.message.placeholder": "告诉我们您梦想中的桂林之旅——任何特殊要求、问题或偏好...",
+            "contact.form.submit": "发送咨询 →",
+            "footer.brand.desc": "您值得信赖的桂林旅行伙伴。我们是位于中国桂林的持证旅行社，自2015年起为国际旅客提供服务。",
+            "footer.packages.title": "旅游套餐", "footer.packages.1": "漓江游船",
+            "footer.packages.2": "阳朔之旅", "footer.packages.3": "美食文化",
+            "footer.packages.4": "龙脊梯田", "footer.packages.5": "定制行程",
+            "footer.company.title": "关于我们", "footer.company.1": "公司简介",
+            "footer.company.2": "导游团队", "footer.company.3": "旅行博客",
+            "footer.company.4": "加入我们", "footer.company.5": "联系方式",
+            "footer.support.title": "客户支持", "footer.support.1": "常见问题",
+            "footer.support.2": "旅行贴士", "footer.support.3": "签证信息",
+            "footer.support.4": "服务条款", "footer.support.5": "隐私政策",
+            "footer.copyright": "\u00a9 2026 桂林通旅游. 版权所有. | 持证旅行社：中国广西桂林",
+            "alert.success": "感谢您的咨询！我们的旅行专家将在24小时内与您联系。"
+        },
+        // ===== KOREAN =====
+        ko: {
+            "nav.tours": "관광 패키지", "nav.whyUs": "왜 우리를", "nav.reviews": "리뷰",
+            "nav.contact": "문의하기", "nav.bookNow": "지금 예약",
+            "hero.badge": "✦ 트립어드바이저 귀린 1위 여행사",
+            "hero.title1": "귀린의 ", "hero.title2": "마법을 경험하세요",
+            "hero.desc": "중국에서 가장 숨 막히는 카르스트 지형을 통해 잊을 수 없는 여정을 떠나세요. 상징적인 리강부터 매력적인 양숴 거리까지 — 완벽한 모험을 만들어 드립니다.",
+            "hero.explore": "관광 둘러보기 →", "hero.quote": "무료 견적 받기",
+            "hero.stat1": "행복한 여행자", "hero.stat2": "관광 패키지", "hero.stat3": "평균 평점",
+            "tours.label": "엄선된 패키지", "tours.title": "엄선된 관광 체험",
+            "tours.desc": "클래식 강 유람선부터 숨겨진 모험까지 — 여행 스타일과 예산에 맞는 완벽한 귀린 체험을 찾아보세요.",
+            "tours.t1.badge": "베스트셀러", "tours.t1.duration": "하루 종일",
+            "tours.t1.title": "클래식 리강 유람선",
+            "tours.t1.desc": "귀린에서 양숴까지 편안한 유람선을 타고 멋진 카르스트 경관을 감상하세요. 20위안 지폐에 등장하는 풍경을 직접 만나보세요.",
+            "tours.t1.tag1": "🚢 강 유람", "tours.t1.tag2": "🏔 카르스트 경관", "tours.t1.tag3": "📷 포토스팟",
+            "tours.t2.badge": "인기", "tours.t2.duration": "2일",
+            "tours.t2.title": "양숴 탐방 투어",
+            "tours.t2.desc": "자전거와 대나무 뗏목으로 양숴의 아름다운 시골을 탐험하세요. 고대 마을, 논밭, 그리고 유명한 인상유삼저 라이트 쇼를 즐기세요.",
+            "tours.t2.tag1": "🚲 자전거", "tours.t2.tag2": "🎋 대나무 뗏목", "tours.t2.tag3": "🎭 라이트 쇼",
+            "tours.t3.badge": "신규", "tours.t3.duration": "반나절",
+            "tours.t3.title": "귀린 미식 문화 산책",
+            "tours.t3.desc": "귀린의 활기찬 음식 문화를 맛보세요. 전설적인 귀린 미분부터 비어피시, 현지 길거리 음식까지 — 모든 감각을 위한 축제입니다.",
+            "tours.t3.tag1": "🍜 귀린 미분", "tours.t3.tag2": "🐟 비어피시", "tours.t3.tag3": "🏪 현지 시장",
+            "tours.from": "부터", "tours.person": "/인", "tours.book": "지금 예약",
+            "why.label": "왜 우리를 선택", "why.title": "신뢰할 수 있는 귀린 여행 파트너",
+            "why.desc": "귀린 여행이 원활하고 진정성 있으며 잊을 수 없도록 최선을 다합니다.",
+            "why.f1.title": "현지 전문 가이드", "why.f1.desc": "숨겨진 명소와 비밀 전망대를 잘 아는 영어 구사 인증 가이드.",
+            "why.f2.title": "최저가 보장", "why.f2.desc": "숨겨진 비용 없는 경쟁력 있는 가격. 동급 투어 가격을 맞춰 드립니다.",
+            "why.f3.title": "무료 취소", "why.f3.desc": "변경 사항이 생기면? 출발 48시간 전까지 전액 환불 가능합니다.",
+            "why.f4.title": "24/7 지원", "why.f4.desc": "WhatsApp, 이메일 또는 전화로 여행 내내 24시간 지원을 제공합니다.",
+            "reviews.label": "여행 후기", "reviews.title": "여행자들의 생생한 이야기",
+            "reviews.desc": "귀린을 함께 탐험한 실제 여행자들의 이야기입니다.",
+            "reviews.r1.text": "\u201c리강 유람선은 정말 숨 막히게 아름다웠어요. 가이드는 박식하고 재미있었습니다. 중국 여행 전체의 하이라이트였어요!\u201d",
+            "reviews.r1.name": "Sarah Mitchell", "reviews.r1.from": "영국 런던",
+            "reviews.r2.text": "\u201c귀린 게이트웨이가 모든 것을 편하게 해줬어요. 공항 픽업부터 양숴 자전거 투어까지 — 모든 디테일이 완벽하게 준비됐습니다.\u201d",
+            "reviews.r2.name": "Michael Chen", "reviews.r2.from": "미국 샌프란시스코",
+            "reviews.r3.text": "\u201c미식 투어는 정말 놀라웠어요! 혼자서는 절대 찾을 수 없었을 음식들을 맛봤습니다. 현지 시장 방문은 정말 진정한 경험이었어요.\u201d",
+            "reviews.r3.name": "Emma Schmidt", "reviews.r3.from": "독일 뮌헨",
+            "cta.title": "귀린 탐험 준비 되셨나요?",
+            "cta.desc": "관심사, 예산, 여행 날짜에 맞춘 무료 맞춤 일정을 받아보세요. 의무 없이 — 순수한 여행 영감만.",
+            "cta.quote": "무료 견적 받기 →", "cta.whatsapp": "WhatsApp 상담",
+            "contact.label": "문의하기", "contact.title": "귀린 모험을 예약하세요",
+            "contact.desc": "아래 양식을 작성하시면 여행 전문가가 24시간 이내에 맞춤 제안과 함께 답변 드립니다.",
+            "contact.info.title": "여행을 함께 계획해요",
+            "contact.info.desc": "혼자, 커플, 가족 또는 그룹으로 여행하시든 — 완벽한 귀린 체험을 설계해 드립니다.",
+            "contact.email": "이메일", "contact.hours": "근무 시간",
+            "contact.hours.detail": "월–토: 오전 9:00 – 오후 9:00 (GMT+8)",
+            "contact.office": "사무실", "contact.address": "중국 광시성 귀린시 중산로",
+            "contact.form.name": "이름 *", "contact.form.email": "이메일 *",
+            "contact.form.date": "여행 날짜", "contact.form.travelers": "여행 인원",
+            "contact.form.select": "선택하세요...",
+            "contact.form.travelers.1": "1명 (혼자)", "contact.form.travelers.2": "2명 (커플)",
+            "contact.form.travelers.3": "3–5명 (가족)", "contact.form.travelers.4": "6–10명 (소규모 그룹)",
+            "contact.form.travelers.5": "10명 이상 (대규모 그룹)",
+            "contact.form.tour": "관심 투어", "contact.form.tour.select": "투어를 선택하세요...",
+            "contact.form.tour.1": "클래식 리강 유람선 — $89부터",
+            "contact.form.tour.2": "양숴 탐방 투어 — $159부터",
+            "contact.form.tour.3": "귀린 미식 문화 산책 — $49부터",
+            "contact.form.tour.4": "미정 / 아직 모르겠어요",
+            "contact.form.message": "메시지",
+            "contact.form.message.placeholder": "꿈꾸는 귀린 여행에 대해 알려주세요 — 특별한 요청, 질문 또는 선호사항...",
+            "contact.form.submit": "문의 보내기 →",
+            "footer.brand.desc": "잊을 수 없는 귀린 여행 경험을 위한 신뢰할 수 있는 파트너. 중국 귀린에 본사를 둔 정식 여행사로, 2015년부터 국제 여행객을 모시고 있습니다.",
+            "footer.packages.title": "관광 패키지", "footer.packages.1": "리강 유람선",
+            "footer.packages.2": "양숴 투어", "footer.packages.3": "미식 문화",
+            "footer.packages.4": "룽지 계단식 논", "footer.packages.5": "맞춤 투어",
+            "footer.company.title": "회사 소개", "footer.company.1": "회사 정보",
+            "footer.company.2": "가이드팀", "footer.company.3": "블로그",
+            "footer.company.4": "채용", "footer.company.5": "문의하기",
+            "footer.support.title": "고객 지원", "footer.support.1": "FAQ",
+            "footer.support.2": "여행 팁", "footer.support.3": "비자 정보",
+            "footer.support.4": "이용약관", "footer.support.5": "개인정보처리방침",
+            "footer.copyright": "\u00a9 2026 귀린 게이트웨이 투어. 모든 권리 보유. | 정식 여행사: 중국 광시성 귀린",
+            "alert.success": "문의해 주셔서 감사합니다! 여행 전문가가 24시간 이내에 연락 드립니다."
+        },
+        // ===== JAPANESE =====
+        ja: {
+            "nav.tours": "ツアーパッケージ", "nav.whyUs": "選ばれる理由", "nav.reviews": "口コミ",
+            "nav.contact": "お問い合わせ", "nav.bookNow": "今すぐ予約",
+            "hero.badge": "✦ トリップアドバイザー 桂林 No.1旅行代理店",
+            "hero.title1": "桂林の", "hero.title2": "魔法を体験しよう",
+            "hero.desc": "中国で最も息を呑むカルスト地形を巡る、忘れられない旅に出かけましょう。象徴的な漓江から陽朔の魅力的な街並みまで — あなただけの完璧な冒険をお作りします。",
+            "hero.explore": "ツアーを探す →", "hero.quote": "無料見積もり",
+            "hero.stat1": "満足した旅行者", "hero.stat2": "ツアーパッケージ", "hero.stat3": "平均評価",
+            "tours.label": "厳選パッケージ", "tours.title": "厳選されたツアーエクスペリエンス",
+            "tours.desc": "クラシックな川クルーズから穴場の冒険まで — あなたの旅行スタイルと予算に合った完璧な桂林体験を見つけましょう。",
+            "tours.t1.badge": "ベストセラー", "tours.t1.duration": "終日",
+            "tours.t1.title": "クラシック漓江クルーズ",
+            "tours.t1.desc": "桂林から陽朔まで快適なクルーズ船で、壮大なカルスト景観を滑り抜ける旅。20元紙幣に描かれた風景をご覧ください。",
+            "tours.t1.tag1": "🚢 川クルーズ", "tours.t1.tag2": "🏔 カルスト景観", "tours.t1.tag3": "📷 フォトスポット",
+            "tours.t2.badge": "人気", "tours.t2.duration": "2日間",
+            "tours.t2.title": "陽朔ディスカバリーツアー",
+            "tours.t2.desc": "自転車と竹筏で陽朔の美しい田園風光を探索。古い村、棚田を訪れ、有名な印象劉三姉ライトショーをお楽しみください。",
+            "tours.t2.tag1": "🚲 サイクリング", "tours.t2.tag2": "🎋 竹筏", "tours.t2.tag3": "🎭 ライトショー",
+            "tours.t3.badge": "新着", "tours.t3.duration": "半日",
+            "tours.t3.title": "桂林グルメ＆カルチャーウォーク",
+            "tours.t3.desc": "桂林の活気あるフードシーンを味わい尽くしましょう。伝説の桂林ビーフンからビアフィッシュ、地元の屋台料理まで — 五感のための饗宴です。",
+            "tours.t3.tag1": "🍜 桂林ビーフン", "tours.t3.tag2": "🐟 ビアフィッシュ", "tours.t3.tag3": "🏪 ローカルマーケット",
+            "tours.from": "〜", "tours.person": "/人", "tours.book": "今すぐ予約",
+            "why.label": "選ばれる理由", "why.title": "信頼できる桂林旅行パートナー",
+            "why.desc": "桂林の旅をシームレスで本物の、忘れられないものにするために全力を尽くします。",
+            "why.f1.title": "地元エキスパートガイド", "why.f1.desc": "隠れた名所や秘密の展望台を知る英語対応の認定ガイド。",
+            "why.f2.title": "最安値保証", "why.f2.desc": "隠れたコストなしの競争力のある価格。同等ツアーの価格に合わせます。",
+            "why.f3.title": "無料キャンセル", "why.f3.desc": "予定が変わっても大丈夫。出発48時間前まで全額返金。",
+            "why.f4.title": "24時間365日サポート", "why.f4.desc": "WhatsApp、メール、電話で旅の全程を通じて24時間体制でサポート。",
+            "reviews.label": "お客様の声", "reviews.title": "旅行者の皆さまの声",
+            "reviews.desc": "桂林を一緒に探訪した実際の旅行者によるリアルなストーリー。",
+            "reviews.r1.text": "\u201c漓江クルーズは本当に息を呑むほど美しかったです。ガイドは知識豊富で楽しかった。中国旅行全体のハイライトでした！\u201d",
+            "reviews.r1.name": "Sarah Mitchell", "reviews.r1.from": "イギリス・ロンドン",
+            "reviews.r2.text": "\u201c桂林ゲートウェイがすべてをスムーズにしてくれました。空港送迎から陽朔サイクリングツアーまで — すべてのディテールが完璧に手配されていました。\u201d",
+            "reviews.r2.name": "Michael Chen", "reviews.r2.from": "アメリカ・サンフランシスコ",
+            "reviews.r3.text": "\u201cフードツアーは素晴らしかったです！自分では絶対に見つけられなかった料理を味わえました。地元市場の見学は本物の体験でした。\u201d",
+            "reviews.r3.name": "Emma Schmidt", "reviews.r3.from": "ドイツ・ミュンヘン",
+            "cta.title": "桂林探訪の準備はできましたか？",
+            "cta.desc": "ご興味・ご予算・旅行日に合わせた無料のパーソナライズ旅程を入手しましょう。義務なし — 純粋な旅行のインスピレーション。",
+            "cta.quote": "無料見積もりを取得 →", "cta.whatsapp": "WhatsAppで相談",
+            "contact.label": "お問い合わせ", "contact.title": "桂林アドベンチャーを予約",
+            "contact.desc": "以下のフォームにご記入ください。旅行エキスパートが24時間以内にパーソナライズされた提案をお送りします。",
+            "contact.info.title": "一緒に旅を計画しましょう",
+            "contact.info.desc": "一人旅、カップル、家族、グループ旅行 — どんなスタイルでも完璧な桂林体験をデザインします。",
+            "contact.email": "メール", "contact.hours": "営業時間",
+            "contact.hours.detail": "月〜土：午前9時〜午後9時（GMT+8）",
+            "contact.office": "オフィス", "contact.address": "中国広西桂林市中山路",
+            "contact.form.name": "お名前 *", "contact.form.email": "メールアドレス *",
+            "contact.form.date": "旅行日", "contact.form.travelers": "旅行人数",
+            "contact.form.select": "選択してください...",
+            "contact.form.travelers.1": "1名（ソロ）", "contact.form.travelers.2": "2名（カップル）",
+            "contact.form.travelers.3": "3〜5名（ファミリー）", "contact.form.travelers.4": "6〜10名（少人数グループ）",
+            "contact.form.travelers.5": "10名以上（大人数グループ）",
+            "contact.form.tour": "興味のあるツアー", "contact.form.tour.select": "ツアーを選択...",
+            "contact.form.tour.1": "クラシック漓江クルーズ — $89〜",
+            "contact.form.tour.2": "陽朔ディスカバリーツアー — $159〜",
+            "contact.form.tour.3": "桂林グルメ＆カルチャーウォーク — $49〜",
+            "contact.form.tour.4": "未定・まだ決めていない",
+            "contact.form.message": "メッセージ",
+            "contact.form.message.placeholder": "ご希望の桂林旅行についてお聞かせください — ご要望、ご質問、ご希望...",
+            "contact.form.submit": "お問い合わせ送信 →",
+            "footer.brand.desc": "忘れられない桂林旅行体験のための信頼できるパートナー。中国桂林に本社を置く正規旅行代理店として、2015年より海外旅行者様にご奉仕しています。",
+            "footer.packages.title": "ツアーパッケージ", "footer.packages.1": "漓江クルーズ",
+            "footer.packages.2": "陽朔ツアー", "footer.packages.3": "グルメ＆カルチャー",
+            "footer.packages.4": "龍勝棚田", "footer.packages.5": "オーダーメイドツアー",
+            "footer.company.title": "会社情報", "footer.company.1": "会社概要",
+            "footer.company.2": "ガイドチーム", "footer.company.3": "ブログ",
+            "footer.company.4": "採用情報", "footer.company.5": "お問い合わせ",
+            "footer.support.title": "サポート", "footer.support.1": "よくある質問",
+            "footer.support.2": "旅行のヒント", "footer.support.3": "ビザ情報",
+            "footer.support.4": "利用規約", "footer.support.5": "プライバシーポリシー",
+            "footer.copyright": "\u00a9 2026 桂林ゲートウェイツアー. 全著作権所有. | 正規旅行代理店：中国広西桂林",
+            "alert.success": "お問い合わせありがとうございます！旅行エキスパートが24時間以内にご連絡いたします。"
+        },
+        // ===== SPANISH =====
+        es: {
+            "nav.tours": "Paquetes", "nav.whyUs": "Por Qué Nosotros", "nav.reviews": "Reseñas",
+            "nav.contact": "Contacto", "nav.bookNow": "Reservar Ahora",
+            "hero.badge": "✦ Agencia de viajes #1 en Guilin en TripAdvisor",
+            "hero.title1": "Vive la ", "hero.title2": "Magia de Guilin",
+            "hero.desc": "Emprende un viaje inolvidable a través de los paisajes kársticos más impresionantes de China. Desde el icónico río Li hasta las encantadoras calles de Yangshuo — creamos la aventura perfecta para ti.",
+            "hero.explore": "Explorar Tours →", "hero.quote": "Cotización Gratis",
+            "hero.stat1": "Viajeros Felices", "hero.stat2": "Paquetes Turísticos", "hero.stat3": "Calificación Promedio",
+            "tours.label": "Nuestros Paquetes", "tours.title": "Experiencias Turísticas Seleccionadas",
+            "tours.desc": "Desde cruceros fluviales clásicos hasta aventuras fuera de lo común — encuentra la experiencia perfecta en Guilin para tu estilo de viaje y presupuesto.",
+            "tours.t1.badge": "Más Vendido", "tours.t1.duration": "Día Completo",
+            "tours.t1.title": "Crucero Clásico por el Río Li",
+            "tours.t1.desc": "Navega por el impresionante paisaje kárstico de Guilin a Yangshuo a bordo de un crucero cómodo. Contempla el paisaje que aparece en el billete de 20 yuanes.",
+            "tours.t1.tag1": "🚢 Crucero Fluvial", "tours.t1.tag2": "🏔 Paisaje Kárstico", "tours.t1.tag3": "📷 Paradas Fotográficas",
+            "tours.t2.badge": "Popular", "tours.t2.duration": "2 Días",
+            "tours.t2.title": "Tour de Descubrimiento de Yangshuo",
+            "tours.t2.desc": "Explora el impresionante campo de Yangshuo en bicicleta y balsa de bambú. Visita aldeas antiguas, arrozales y disfruta del famoso espectáculo de luz Impresión Sanjie Liu.",
+            "tours.t2.tag1": "🚲 Ciclismo", "tours.t2.tag2": "🎋 Balsa de Bambú", "tours.t2.tag3": "🎭 Espectáculo de Luz",
+            "tours.t3.badge": "Nuevo", "tours.t3.duration": "Medio Día",
+            "tours.t3.title": "Paseo Gastronómico y Cultural de Guilin",
+            "tours.t3.desc": "Recorre la vibrante escena culinaria de Guilin. Desde los legendarios fideos de arroz de Guilin hasta la cerveza con pescado y aperitivos callejeros — un festín para todos los sentidos.",
+            "tours.t3.tag1": "🍜 Fideos de Arroz", "tours.t3.tag2": "🐟 Cerveza con Pescado", "tours.t3.tag3": "🏪 Mercados Locales",
+            "tours.from": "Desde", "tours.person": "/persona", "tours.book": "Reservar Ahora",
+            "why.label": "Por Qué Elegirnos", "why.title": "Tu Socio de Viaje de Confianza en Guilin",
+            "why.desc": "Hacemos todo lo posible para que tu viaje a Guilin sea fluido, auténtico e inolvidable.",
+            "why.f1.title": "Guías Locales Expertos", "why.f1.desc": "Guías certificados que hablan inglés y conocen cada joya oculta y mirador secreto.",
+            "why.f2.title": "Garantía de Mejor Precio", "why.f2.desc": "Precios competitivos sin costos ocultos. Igualamos el precio de cualquier tour comparable.",
+            "why.f3.title": "Cancelación Gratuita", "why.f3.desc": "Los planes cambian — lo entendemos. Cancela hasta 48 horas antes para un reembolso completo.",
+            "why.f4.title": "Soporte 24/7", "why.f4.desc": "Asistencia las 24 horas vía WhatsApp, correo electrónico o teléfono durante todo tu viaje.",
+            "reviews.label": "Testimonios", "reviews.title": "Lo Que Dicen Nuestros Viajeros",
+            "reviews.desc": "Historias reales de viajeros reales que exploraron Guilin con nosotros.",
+            "reviews.r1.text": "\u201cEl crucero por el río Li fue absolutamente impresionante. Nuestro guía era conocedor y divertido. ¡Fue el punto culminante de todo nuestro viaje a China!\u201d",
+            "reviews.r1.name": "Sarah Mitchell", "reviews.r1.from": "Londres, Reino Unido",
+            "reviews.r2.text": "\u201cGuilin Gateway hizo que todo fuera sin esfuerzo. Desde la recogida en el aeropuerto hasta el tour en bicicleta por Yangshuo — cada detalle fue perfectamente organizado.\u201d",
+            "reviews.r2.name": "Michael Chen", "reviews.r2.from": "San Francisco, EE.UU.",
+            "reviews.r3.text": "\u201c¡El tour gastronómico fue increíble! Probamos platos que nunca habríamos encontrado solos. La visita al mercado local fue una experiencia verdaderamente auténtica.\u201d",
+            "reviews.r3.name": "Emma Schmidt", "reviews.r3.from": "Múnich, Alemania",
+            "cta.title": "¿Listo para Explorar Guilin?",
+            "cta.desc": "Obtén un itinerario personalizado gratuito adaptado a tus intereses, presupuesto y fechas de viaje. Sin compromisos — solo inspiración pura de viaje.",
+            "cta.quote": "Obtén Tu Cotización Gratis →", "cta.whatsapp": "Chatea por WhatsApp",
+            "contact.label": "Contáctanos", "contact.title": "Reserva Tu Aventura en Guilin",
+            "contact.desc": "Completa el formulario y nuestros expertos en viajes te responderán en un plazo de 24 horas con una propuesta personalizada.",
+            "contact.info.title": "Planifiquemos Tu Viaje",
+            "contact.info.desc": "Ya sea que viajes solo, en pareja, con familia o en grupo — diseñaremos la experiencia perfecta en Guilin para ti.",
+            "contact.email": "Correo Electrónico", "contact.hours": "Horario de Atención",
+            "contact.hours.detail": "Lun–Sáb: 9:00 AM – 9:00 PM (GMT+8)",
+            "contact.office": "Oficina", "contact.address": "Calle Zhongshan, Guilin, Guangxi, China",
+            "contact.form.name": "Nombre Completo *", "contact.form.email": "Correo Electrónico *",
+            "contact.form.date": "Fecha de Viaje", "contact.form.travelers": "Número de Viajeros",
+            "contact.form.select": "Seleccionar...",
+            "contact.form.travelers.1": "1 Persona (Solo)", "contact.form.travelers.2": "2 Personas (Pareja)",
+            "contact.form.travelers.3": "3–5 Personas (Familia)", "contact.form.travelers.4": "6–10 Personas (Grupo Pequeño)",
+            "contact.form.travelers.5": "10+ Personas (Grupo Grande)",
+            "contact.form.tour": "Tour de Interés", "contact.form.tour.select": "Selecciona un tour...",
+            "contact.form.tour.1": "Crucero Clásico por el Río Li — desde $89",
+            "contact.form.tour.2": "Tour de Descubrimiento de Yangshuo — desde $159",
+            "contact.form.tour.3": "Paseo Gastronómico y Cultural de Guilin — desde $49",
+            "contact.form.tour.4": "Personalizado / No Estoy Seguro",
+            "contact.form.message": "Mensaje",
+            "contact.form.message.placeholder": "Cuéntanos sobre tu viaje soñado a Guilin — solicitudes especiales, preguntas o preferencias...",
+            "contact.form.submit": "Enviar Consulta →",
+            "footer.brand.desc": "Tu socio de confianza para experiencias de viaje inolvidables en Guilin. Agencia de viajes con licencia en Guilin, China, sirviendo a viajeros internacionales desde 2015.",
+            "footer.packages.title": "Paquetes Turísticos", "footer.packages.1": "Crucero Río Li",
+            "footer.packages.2": "Tours Yangshuo", "footer.packages.3": "Gastronomía y Cultura",
+            "footer.packages.4": "Terrazas Longji", "footer.packages.5": "Tours Personalizados",
+            "footer.company.title": "Empresa", "footer.company.1": "Sobre Nosotros",
+            "footer.company.2": "Nuestros Guías", "footer.company.3": "Blog",
+            "footer.company.4": "Empleo", "footer.company.5": "Contacto",
+            "footer.support.title": "Soporte", "footer.support.1": "Preguntas Frecuentes",
+            "footer.support.2": "Consejos de Viaje", "footer.support.3": "Info de Visado",
+            "footer.support.4": "Términos de Servicio", "footer.support.5": "Política de Privacidad",
+            "footer.copyright": "\u00a9 2026 Guilin Gateway Tours. Todos los derechos reservados. | Agencia con licencia: Guilin, Guangxi, China",
+            "alert.success": "¡Gracias por tu consulta! Nuestros expertos en viajes te contactarán en un plazo de 24 horas."
+        }
+    };
+
+    // Language meta info (flag + label for the switcher button)
+    const langMeta = {
+        en: { flag: "\ud83c\uddfa\ud83c\uddf8", label: "EN" },
+        zh: { flag: "\ud83c\udde8\ud83c\uddf3", label: "中文" },
+        ko: { flag: "\ud83c\uddf0\ud83c\uddf7", label: "한국어" },
+        ja: { flag: "\ud83c\uddef\ud83c\uddf5", label: "日本語" },
+        es: { flag: "\ud83c\uddea\ud83c\uddf8", label: "ES" }
+    };
+
+    // Current language (persisted in localStorage)
+    let currentLang = localStorage.getItem("site-lang") || "en";
+
+    // Apply translations to all elements with data-i18n attribute
+    function applyTranslations(lang) {
+        const dict = i18nData[lang];
+        if (!dict) return;
+        currentLang = lang;
+        localStorage.setItem("site-lang", lang);
+
+        // Update html lang attribute
+        document.documentElement.lang = lang;
+
+        // Update page title and meta description
+        if (lang === "zh") {
+            document.title = "桂林通旅游 — 发现中国最美山水的心脏地带";
+            document.querySelector('meta[name="description"]').content = "桂林领先旅行社，提供漓江游船、阳朔之旅、喀斯特山脉探险和地道本地体验。立即预订您的桂林梦想之旅。";
+        } else if (lang === "ko") {
+            document.title = "귀린 게이트웨이 투어 — 중국에서 가장 아름다운 풍경의 심장부를 발견하세요";
+            document.querySelector('meta[name="description"]').content = "리강 크루즈, 양숴 투어, 카르스트 산 모험 및 진정한 현지 체험을 제공하는 프리미어 귀린 여행사. 오늘 꿈의 귀린 여행을 예약하세요.";
+        } else if (lang === "ja") {
+            document.title = "桂林ゲートウェイツアー — 中国で最も美しい景観の中心を発見";
+            document.querySelector('meta[name="description"]').content = "漓江クルーズ、陽朔ツアー、カルスト山脈アドベンチャー、本格的な地元体験を提供する桂林のプレミア旅行会社。今日、夢の桂林旅行を予約しましょう。";
+        } else if (lang === "es") {
+            document.title = "Guilin Gateway Tours — Descubre el corazón del paisaje más hermoso de China";
+            document.querySelector('meta[name="description"]').content = "Agencia de viajes premium en Guilin que ofrece cruceros por el río Li, tours a Yangshuo, aventuras en montañas kársticas y experiencias locales auténticas. Reserva tu viaje soñado a Guilin hoy.";
+        } else {
+            document.title = "Guilin Gateway Tours \u2014 Discover the Heart of China\u2019s Most Beautiful Landscape";
+            document.querySelector('meta[name="description"]').content = "Premier Guilin travel agency offering Li River cruises, Yangshuo tours, karst mountain adventures, and authentic local experiences. Book your dream Guilin trip today.";
+        }
+
+        // Translate all elements with data-i18n
+        document.querySelectorAll("[data-i18n]").forEach(el => {
+            const key = el.getAttribute("data-i18n");
+            if (dict[key] !== undefined) {
+                if (el.tagName === "OPTION") {
+                    el.textContent = dict[key];
+                } else {
+                    el.textContent = dict[key];
+                }
+            }
+        });
+
+        // Translate placeholders
+        document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+            const key = el.getAttribute("data-i18n-placeholder");
+            if (dict[key] !== undefined) {
+                el.placeholder = dict[key];
+            }
+        });
+
+        // Update language switcher button
+        const meta = langMeta[lang];
+        document.getElementById("langFlag").textContent = meta.flag;
+        document.getElementById("langLabel").textContent = meta.label;
+
+        // Update active state in dropdown
+        document.querySelectorAll(".lang-option").forEach(opt => {
+            opt.classList.toggle("active", opt.getAttribute("data-lang") === lang);
+        });
+    }
+
+    // ==================== LANGUAGE SWITCHER UI ====================
+    document.getElementById("langBtn").addEventListener("click", function(e) {
+        e.stopPropagation();
+        document.getElementById("langSwitcher").classList.toggle("open");
+    });
+
+    document.querySelectorAll(".lang-option").forEach(opt => {
+        opt.addEventListener("click", function() {
+            const lang = this.getAttribute("data-lang");
+            applyTranslations(lang);
+            document.getElementById("langSwitcher").classList.remove("open");
+        });
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", function(e) {
+        if (!document.getElementById("langSwitcher").contains(e.target)) {
+            document.getElementById("langSwitcher").classList.remove("open");
+        }
+    });
+
+    // ==================== ORIGINAL SITE SCRIPTS ====================
     // Navbar scroll effect
     window.addEventListener('scroll', () => {
         document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
@@ -787,7 +1333,6 @@
     function scrollToContact(tourName) {
         const contactSection = document.getElementById('contact');
         contactSection.scrollIntoView({ behavior: 'smooth' });
-        // Pre-select the tour
         const tourSelect = document.getElementById('tour');
         if (tourSelect && tourName) {
             for (let option of tourSelect.options) {
@@ -806,7 +1351,8 @@
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
         console.log('Form submitted:', data);
-        alert('Thank you for your inquiry! Our travel experts will contact you within 24 hours.');
+        const dict = i18nData[currentLang];
+        alert(dict["alert.success"] || "Thank you for your inquiry! Our travel experts will contact you within 24 hours.");
         form.reset();
     }
 
@@ -828,6 +1374,11 @@
             navLinks.style.gap = '16px';
         }
     });
+
+    // ==================== INIT: Apply saved language on page load ====================
+    if (currentLang !== 'en') {
+        applyTranslations(currentLang);
+    }
 </script>
 
 </body>
